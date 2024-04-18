@@ -22,7 +22,7 @@ func GetImageByMetaProviderId(c *gin.Context) {
 	case "tmdb":
 		hasError, data := providers.GetTmdbImageInfoByTmdbId(metaProviderId)
 		if hasError {
-			c.JSON(http.StatusInternalServerError, gin.H{"data": "fail"})
+			c.JSON(http.StatusNotFound, gin.H{"data": "fail"})
 		}
 		c.JSON(http.StatusOK, gin.H{"data": data})
 	case "mal":

@@ -51,3 +51,26 @@ func SearchMyanimeListByNameAndReturnBestMatch(title string) (bool, interfaces.M
 
 	return false, responseObject.Result[currIndex]
 }
+
+func SearchMyanimeListByNameAndReturnBestMatchAsync(title string, result chan<- map[string]any, errors chan<- map[string]bool) {
+	hasError, responseObject := SearchMyanimeListByName(title)
+
+	if hasError || len(responseObject.Result) == 0 {
+		errors <- map[string]bool{"mal": true}
+		return // Exit early on error
+	}
+
+	// Find best match
+	scores := len(title)
+	currIndex := 0
+	for ind, result := range responseObject.Result {
+		currScore := helpers.MinDistance(result.Title, title)
+		if currScore < scores {
+			scores = currScore
+			currIndex = ind
+		}
+	}
+
+	// Send result
+	result <- map[string]any{"mal": responseObject.Result[currIndex]}
+}

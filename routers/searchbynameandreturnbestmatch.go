@@ -34,7 +34,7 @@ func SearchByNameAndReturnBestMatch(c *gin.Context) {
 	}
 
 	if hasError {
-		c.JSON(http.StatusInternalServerError, gin.H{"data": "fail"})
+		c.JSON(http.StatusNotFound, gin.H{"data": "fail"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"slug": slug, "data": data})

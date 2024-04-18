@@ -21,5 +21,6 @@ func main() {
 	router.GET("meta/:provider/search", routers.SearchByName)
 	router.GET("meta/:provider/searchbestmatch", routers.SearchByNameAndReturnBestMatch)
 	router.GET("meta/:provider/images", routers.GetImageByMetaProviderId)
+	router.GET("meta/automap", routers.Automap)
 	router.Run()
 }

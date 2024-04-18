@@ -197,3 +197,25 @@ func SearchAniListByNameAndReturnBestMatch(title string) (bool, interfaces.AniLi
 
 	return false, responseObject.Result[currIndex]
 }
+
+func SearchAniListByNameAndReturnBestMatchAsync(title string, result chan<- map[string]any, errors chan<- map[string]bool) {
+	hasError, responseObject := SearchAnilistByName(title)
+
+	if hasError || len(responseObject.Result) == 0 {
+		errors <- map[string]bool{"anilist": true}
+		return // Exit early on error
+	}
+
+	scores := len(title)
+	currIndex := 0
+	for ind, result := range responseObject.Result {
+		currScore := helpers.MinDistance(result.Title.UserPreferred, title)
+		if currScore < scores {
+			scores = currScore
+			currIndex = ind
+		}
+	}
+
+	// Send result
+	result <- map[string]any{"anilist": responseObject.Result[currIndex]}
+}

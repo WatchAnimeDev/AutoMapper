@@ -84,3 +84,25 @@ func GetTmdbImageInfoByTmdbId(tmdbId string) (bool, interfaces.TmdbImageResponse
 
 	return false, responseObject
 }
+
+func SearchTmdbByNameAndReturnBestMatchAsync(title string, result chan<- map[string]any, errors chan<- map[string]bool) {
+	hasError, responseObject := SearchTmdbByName(title)
+
+	if hasError || len(responseObject.Results) == 0 {
+		errors <- map[string]bool{"tmdb": true}
+		return // Exit early on error
+	}
+
+	scores := len(title)
+	currIndex := 0
+	for ind, result := range responseObject.Results {
+		currScore := helpers.MinDistance(result.Name, title)
+		if currScore < scores {
+			scores = currScore
+			currIndex = ind
+		}
+	}
+
+	// Send result
+	result <- map[string]any{"tmdb": responseObject.Results[currIndex]}
+}
