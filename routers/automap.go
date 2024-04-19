@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"watchanime/auto-mapper/config"
 	"watchanime/auto-mapper/helpers"
 	"watchanime/auto-mapper/providers"
 
@@ -17,12 +18,13 @@ func Automap(c *gin.Context) {
 
 	providerList := strings.Split(c.Query("provider"), "|")
 
-	supportedServices := []string{"tmdb", "mal", "anilist", "all"}
+	supportedServices := config.SupportedServices
 
 	providerFuncs := map[string]func(string, chan<- map[string]any, chan<- map[string]bool){
 		"tmdb":    providers.SearchTmdbByNameAndReturnBestMatchAsync,
 		"mal":     providers.SearchMyanimeListByNameAndReturnBestMatchAsync,
 		"anilist": providers.SearchAniListByNameAndReturnBestMatchAsync,
+		"kitsu":   providers.SearchKitsuByNameAndReturnBestMatchAsync,
 	}
 
 	errorList := helpers.ValidateSearchRequestAutoMap(c, providerList, supportedServices)

@@ -2,6 +2,7 @@ package routers
 
 import (
 	"net/http"
+	"watchanime/auto-mapper/config"
 	"watchanime/auto-mapper/helpers"
 	"watchanime/auto-mapper/providers"
 
@@ -10,7 +11,7 @@ import (
 
 func GetImageByMetaProviderId(c *gin.Context) {
 	metaProviderId := c.Query("id")
-	supportedServices := []string{"tmdb", "mal", "anilist"}
+	supportedServices := config.SupportedServices
 	provider := c.Param("provider")
 
 	errorList := helpers.ValidateMetaImageRequest(c, supportedServices)

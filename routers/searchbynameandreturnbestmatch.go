@@ -2,6 +2,7 @@ package routers
 
 import (
 	"net/http"
+	"watchanime/auto-mapper/config"
 	"watchanime/auto-mapper/helpers"
 	"watchanime/auto-mapper/providers"
 
@@ -13,7 +14,7 @@ func SearchByNameAndReturnBestMatch(c *gin.Context) {
 	title := c.Query("title")
 	provider := c.Param("provider")
 
-	supportedServices := []string{"tmdb", "mal", "anilist", "all"}
+	supportedServices := config.SupportedServices
 
 	errorList := helpers.ValidateSearchRequest(c, supportedServices)
 	if len(errorList) > 0 {
@@ -31,6 +32,8 @@ func SearchByNameAndReturnBestMatch(c *gin.Context) {
 		hasError, data = providers.SearchMyanimeListByNameAndReturnBestMatch(title)
 	case "anilist":
 		hasError, data = providers.SearchAniListByNameAndReturnBestMatch(title)
+	case "kitsu":
+		hasError, data = providers.SearchKistuByNameAndReturnBestMatch(title)
 	}
 
 	if hasError {
