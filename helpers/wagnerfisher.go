@@ -1,5 +1,7 @@
 package helpers
 
+import "strings"
+
 func MinDistance(word1, word2 string) int {
 	dp := make(map[[2]int]int)
 
@@ -19,7 +21,7 @@ func MinDistance(word1, word2 string) int {
 		}
 
 		var result int
-		if word1[i] == word2[j] {
+		if word1[i] == word2[j] || strings.EqualFold(string(word1[i]), string(word2[j])) {
 			result = getDist(i+1, j+1)
 		} else {
 			result = 1 + min(getDist(i+1, j+1), min(getDist(i, j+1), getDist(i+1, j)))
