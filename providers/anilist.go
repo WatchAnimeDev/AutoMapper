@@ -171,7 +171,6 @@ func SearchAnilistByName(title string) (bool, interfaces.AniListSearchResponse) 
 
 	err = json.Unmarshal(responseData, &responseObject)
 	if err != nil {
-		fmt.Println("unmarshal error: ", err)
 		return true, interfaces.AniListSearchResponse{}
 	}
 

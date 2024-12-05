@@ -18,6 +18,7 @@ func SearchMyanimeListByName(title string) (bool, interfaces.MyanimeListSearchRe
 	if err != nil {
 		return true, responseObject
 	}
+	defer response.Body.Close()
 
 	responseData, err := io.ReadAll(response.Body)
 	if err != nil {
