@@ -70,3 +70,25 @@ func SearchZoroByNameAndReturnBestMatch(title string) (bool, any) {
 
 	return false, responseObject.Result[currIndex]
 }
+
+func SearchZoroByNameAndReturnBestMatchAsync(title string, result chan<- map[string]any, errors chan<- map[string]bool) {
+	hasError, responseObject := SearchZoroByName(title)
+
+	if hasError || len(responseObject.Result) == 0 {
+		errors <- map[string]bool{"zoro": true}
+		return
+	}
+
+	scores := len(title)
+	currIndex := 0
+	for ind, result := range responseObject.Result {
+		currScore := helpers.MinDistance(result.Title, title)
+		if currScore < scores {
+			scores = currScore
+			currIndex = ind
+		}
+	}
+
+	// Send result
+	result <- map[string]any{"zoro": responseObject.Result[currIndex]}
+}

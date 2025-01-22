@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"sync"
@@ -25,6 +26,7 @@ func Automap(c *gin.Context) {
 		"mal":     providers.SearchMyanimeListByNameAndReturnBestMatchAsync,
 		"anilist": providers.SearchAniListByNameAndReturnBestMatchAsync,
 		"kitsu":   providers.SearchKitsuByNameAndReturnBestMatchAsync,
+		"zoro":    providers.SearchZoroByNameAndReturnBestMatchAsync,
 	}
 
 	errorList := helpers.ValidateSearchRequestAutoMap(c, providerList, supportedServices)
@@ -70,6 +72,7 @@ func Automap(c *gin.Context) {
 	if len(errors) == len(providerList) {
 		c.JSON(http.StatusNotFound, gin.H{"data": "fail"})
 	} else {
+		fmt.Println(len(errors))
 		c.JSON(http.StatusOK, gin.H{"slug": slug, "data": data})
 	}
 }
