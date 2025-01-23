@@ -22,11 +22,12 @@ func Automap(c *gin.Context) {
 	supportedServices := config.SupportedServices
 
 	providerFuncs := map[string]func(string, chan<- map[string]any, chan<- map[string]bool){
-		"tmdb":    providers.SearchTmdbByNameAndReturnBestMatchAsync,
-		"mal":     providers.SearchMyanimeListByNameAndReturnBestMatchAsync,
-		"anilist": providers.SearchAniListByNameAndReturnBestMatchAsync,
-		"kitsu":   providers.SearchKitsuByNameAndReturnBestMatchAsync,
-		"zoro":    providers.SearchZoroByNameAndReturnBestMatchAsync,
+		"tmdb":      providers.SearchTmdbByNameAndReturnBestMatchAsync,
+		"mal":       providers.SearchMyanimeListByNameAndReturnBestMatchAsync,
+		"anilist":   providers.SearchAniListByNameAndReturnBestMatchAsync,
+		"kitsu":     providers.SearchKitsuByNameAndReturnBestMatchAsync,
+		"zoro":      providers.SearchZoroByNameAndReturnBestMatchAsync,
+		"animepahe": providers.SearchAnimepaheByNameAndReturnBestMatchAsync,
 	}
 
 	errorList := helpers.ValidateSearchRequestAutoMap(c, providerList, supportedServices)
