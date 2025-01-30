@@ -56,5 +56,12 @@ func SearchByName(c *gin.Context) {
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{"slug": slug, "data": data})
+	case "animepahe":
+		hasError, data := providers.SearchAnimepaheByName(title)
+		if hasError {
+			c.JSON(http.StatusNotFound, gin.H{"data": "fail"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"slug": slug, "data": data})
 	}
 }

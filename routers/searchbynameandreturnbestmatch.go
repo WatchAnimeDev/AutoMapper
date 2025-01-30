@@ -36,6 +36,8 @@ func SearchByNameAndReturnBestMatch(c *gin.Context) {
 		hasError, data = providers.SearchKistuByNameAndReturnBestMatch(title)
 	case "zoro":
 		hasError, data = providers.SearchZoroByNameAndReturnBestMatch(title)
+	case "animepahe":
+		hasError, data = providers.SearchAnimepaheByNameAndReturnBestMatch(title)
 	}
 
 	if hasError {
