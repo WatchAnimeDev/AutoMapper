@@ -48,7 +48,7 @@ func updateAnimepaheCookie(newCookies string) error {
 	mergedCookies := mergeCookies(oldCookies, newCookies)
 
 	// Store merged cookies
-	err := redisClient.Set(ctx, "animepaheCookie", mergedCookies, 24*time.Hour).Err()
+	err := redisClient.Set(ctx, "animepaheCookie", mergedCookies, 0).Err()
 	if err != nil {
 		log.Println("Error storing animepaheCookie in Redis:", err)
 		return err
