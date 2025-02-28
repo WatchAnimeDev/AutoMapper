@@ -74,7 +74,7 @@ func SearchAnizoneByNameAndReturnBestMatchAsync(title string, result chan<- map[
 	hasError, responseObject := SearchAnizoneByName(title)
 
 	if hasError || len(responseObject.Result) == 0 {
-		errors <- map[string]bool{"Anizone": true}
+		errors <- map[string]bool{"anizone": true}
 		return
 	}
 
@@ -89,5 +89,5 @@ func SearchAnizoneByNameAndReturnBestMatchAsync(title string, result chan<- map[
 	}
 
 	// Send result
-	result <- map[string]any{"Anizone": responseObject.Result[currIndex]}
+	result <- map[string]any{"anizone": responseObject.Result[currIndex]}
 }
