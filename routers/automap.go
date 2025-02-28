@@ -28,6 +28,7 @@ func Automap(c *gin.Context) {
 		"kitsu":     providers.SearchKitsuByNameAndReturnBestMatchAsync,
 		"zoro":      providers.SearchZoroByNameAndReturnBestMatchAsync,
 		"animepahe": providers.SearchAnimepaheByNameAndReturnBestMatchAsync,
+		"anizone":   providers.SearchAnizoneByNameAndReturnBestMatchAsync,
 	}
 
 	errorList := helpers.ValidateSearchRequestAutoMap(c, providerList, supportedServices)
