@@ -36,11 +36,11 @@ func SearchAnizoneByName(title string) (bool, interfaces.AnizoneSearchResponse) 
 	doc.Find(".h-6.inline.truncate").Each(func(i int, s *goquery.Selection) {
 		attrVal, exists := s.Find("a").Attr("href")
 		if exists {
-			animeId := strings.Split(strings.TrimPrefix(attrVal, "/"), "?")[0]
+			animeId := strings.Split(attrVal, "/")
 			title := strings.TrimSpace(s.Find("a").Text())
 			resp = append(resp, interfaces.AnizoneIndividualResult{
 				Title: title, // Assuming title in English as an example
-				ID:    animeId,
+				ID:    animeId[len(animeId)-1],
 			})
 		}
 	})
