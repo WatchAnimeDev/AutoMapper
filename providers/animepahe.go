@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"watchanime/auto-mapper/config"
 	"watchanime/auto-mapper/helpers"
 	"watchanime/auto-mapper/interfaces"
 
@@ -169,7 +170,9 @@ func SearchAnimepaheByNameAndReturnBestMatch(title string) (bool, interfaces.Ani
 			currIndex = ind
 		}
 	}
-
+	if float64((scores)/len(title)) >= config.EditDistanceTolerance {
+		return true, interfaces.AnimepaheIndividualResult{}
+	}
 	return false, responseObject.Result[currIndex]
 }
 

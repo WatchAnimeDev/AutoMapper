@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"watchanime/auto-mapper/config"
 	"watchanime/auto-mapper/helpers"
 	"watchanime/auto-mapper/interfaces"
 
@@ -66,7 +67,9 @@ func SearchAnizoneByNameAndReturnBestMatch(title string) (bool, any) {
 			currIndex = ind
 		}
 	}
-
+	if float64((scores)/len(title)) >= config.EditDistanceTolerance {
+		return true, map[string]any{}
+	}
 	return false, responseObject.Result[currIndex]
 }
 
